@@ -1,0 +1,95 @@
+@import 'https://fonts.googleapis.com/css?family=Mirza:700';
+body{
+    padding-top: 3em;
+}
+
+.mainBanner{
+    height: 10em;
+    margin: 3% auto auto auto;
+    border-radius: 10px;
+}
+
+#title{
+    color: #914DD5;
+    font-family: Mirza, verdana;
+    text-align: center;
+    font-size: 4em;
+}
+
+#caption{
+    color: #914DD5;
+    margin-top: 2%;
+    text-align:center;
+}
+
+.buttons-wrapper{
+    margin: 2%;
+    text-align: center;
+}
+
+.fb-style{
+    background-color: #3D67BC;
+    color: white;
+
+}
+
+.fb-style:hover{
+    color: white;
+    background-color: #1E4594;
+}
+
+.fb-style:enabled{
+    color: white;
+}
+
+.twt-style{
+    background-color: #00ACED;
+    color: white;
+}
+
+.twt-style:hover{
+    color: white;
+    background-color: #038CBD;
+}
+
+.twt-style:enabled{
+    color: white;
+}
+
+.intro-content{
+    color: black;
+    text-align: center;
+    margin-top: 5%; 
+    font-size: 16px;
+}
+
+.footer{
+    text-align: center;
+    margin: 5% auto;
+}
+
+.create-text{
+    text-align: center;
+    margin: 1% auto;
+}
+
+#add-more-options{
+    margin: 1% auto;
+    text-align: center;
+}
+
+#form-button{
+    margin: 1% auto;
+    text-align: center;
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
+.options-heading{
+    margin: 2% auto auto;
+    text-align: center
+}
+

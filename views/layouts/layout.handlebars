@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html lang="en" ng-app="voting">
+
+<head prefix="og: http://ogp.me/ns#">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Voting App</title>
+    <meta property="og:title" content="Voting App" />
+    <meta property="og:description" content="Registered users can create poles and get live results. We only accept facebook and twitter users to sing up, for easy maintainance of our databases and servers. In order to vote one should be registered or every ip address will be alloted with one vote for every poll."
+    />
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+        crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="custom.css" />
+</head>
+
+<body>
+
+
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div style="background-color: #4BC789;">
+            <div class="container">
+                <div class="navbar-header">
+                    <button id="nav-toggle-button" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar" style="background-color:white"></span>
+                        <span class="icon-bar" style="background-color:white"></span>
+                        <span class="icon-bar" style="background-color:white"></span>
+                        {{#unless user}}
+                        <span class="icon-bar" style="background-color:white"></span>
+                        {{/unless}}
+                    </button>
+                    <a class="navbar-brand" style="color:white" href="#"><span>Voting App</span></a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav navbar-right">
+                        {{#if user}}
+                        <li><a href="/dashboard"><span style="color:white">Dashboard</span></a></li>
+                        <li><a href="/polls"><span style="color:white">Polls</span></a></li>
+                        <li><a href="/logout"><span style="color:white">Logout</span></a></li>
+                        {{else}}
+                        <li><a href="/"><span style="color:white">Home</span></a></li>
+                        <li><a href="/polls"><span style="color:white">Polls</span></a></li>
+                        <li><a href="/login"><span style="color:white">Login</span></a></li>
+                        <li><a href="/signup"><span style="color:white">Sign Up</span></a></li>
+                        {{/if}}
+                    </ul>
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="mainBanner">
+            <h1 id="title">Voting App</h1>
+            <h3 id="caption">We love democracy. We respect your vote.</h3>
+            <hr style="width: 90%; margin:auto" />
+        </div>
+
+        <div class="row">
+            <div class="col-md-10 col-centered">
+                {{#if success_msg}}
+                    <div class="alert alert-success" style="text-align:center">{{success_msg}}</div>
+                {{/if}}
+
+                {{#if error_msg}}
+                    <div class="alert alert-danger" style="text-align:center">{{error_msg}}</div>
+                {{/if}}
+
+                {{#if error}}
+                    <div class="alert alert-danger" style="text-align:center">{{error}}</div>
+                {{/if}}
+            </div>
+        </div>
+
+        {{{body}}}
+
+        <footer class="footer">
+            Coded by: <a href="https://www.bunnyvishal.com/" style="text-decoration:none" target="_blank">Bunny Vishal</a>
+        </footer>
+    </div>
+    <!-- Latest compiled and minified jQuery -->
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+        crossorigin="anonymous"></script>
+    <!-- Latest complied and minified Angular js -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <!-- Latest compiled and minified Angular route js-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
+    <!-- app.js Angular file -->
+    <script src="app.js"></script>
+    <!-- validator -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
+</body>
+
+</html>
