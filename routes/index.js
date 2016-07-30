@@ -88,14 +88,14 @@ router.post('/login', function (req, res) {
     email = email.toLowerCase();
     User.findOne({ email: email }, function (err, user) {
         if (!user) {
-            res.render('login', { error: 'Invalid username or password', csrfToken: req.csrfToken() });
+            res.render('login', { error: 'Incorrect username or password', csrfToken: req.csrfToken() });
         } else {
             if (bcrypt.compareSync(password, user.password)) {
                 req.session.user = { name: user.name, email: user.email, id: user.id };
                 res.redirect('/dashboard');
             } else {
                 var token = req.csrfToken();
-                res.render('login', { error: 'Invalid username or password', csrfToken: req.csrfToken() });
+                res.render('login', { error: 'Incorrect username or password', csrfToken: req.csrfToken() });
             }
         }
     });
@@ -149,6 +149,20 @@ router.get('/auth/facebook/callback',
         res.redirect('/dashboard');
     }
 );
+
+//get /auth/google
+router.get('/auth/google',
+    passport.authenticate('google', { scope: ['profile', 'email'] }));
+
+//get /auth/google/callback
+router.get('/auth/google/callback',
+    passport.authenticate('google', { failureRedirect: '/login' }),
+    function (req, res) {
+        req.session.user = { email: req.session.passport.user };
+        res.redirect('/dashboard');
+    }
+);
+
 
 //get logout
 router.get('/logout', function (req, res) {

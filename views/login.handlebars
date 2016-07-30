@@ -1,4 +1,11 @@
-<login-buttons></login-buttons>
+<div style="text-align:center">
+    <a href="/auth/facebook" class="btn btn-md btn-social fb-style">
+        <i class="fa fa-facebook" ></i> &nbsp; Log in with facebook
+    </a>
+    <a href="/auth/google" class="btn btn-social btn-google g-style">
+        <i class="fa fa-google-plus"></i> &nbsp; Sign in with Google
+    </a>
+</div>
 
 <h3 style="text-align: center">OR</h3>
 <h4 style="text-align: center">Login with Username and Password</h4>
@@ -9,7 +16,12 @@
         <div class="row">
             <div class="col-md-4 col-centered">
                 <label>Username</label>
-                <input type="email" maxlength="30" minlength="6" class="form-control" name="username" placeholder="Username" required>
+                <div class="input-group">    
+                    <span class="input-group-addon">
+                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                    </span>
+                    <input type="email" maxlength="30" minlength="6" class="form-control" name="username" placeholder="Username" required>
+                </div>
             </div>
         </div>
     </div>
@@ -17,11 +29,16 @@
         <div class="row">
             <div class="col-md-4 col-centered">
                 <label>Password</label>
-                <input type="password" maxlength="10" minlength="6" class="form-control" name="password" placeholder="Password" required>
+                <div class="input-group">    
+                    <span class="input-group-addon">
+                        <i class="fa fa-lock" aria-hidden="true"></i>
+                    </span>    
+                    <input type="password" maxlength="10" minlength="6" class="form-control" name="password" placeholder="Password" required>
+                </div>
             </div>
         </div>
     </div>
     <div style="margin:auto; text-align:center">
-        <button type="submit" class="btn btn-md btn-success">Login</button>
+        <button type="submit" class="btn btn-md btn-success">Login <span class="glyphicon glyphicon-log-in"></span></button>
     </div>
 </form>

@@ -6,33 +6,6 @@
         $interpolateProvider.endSymbol('}]}');
     });
 
-    var name, pictureUrl, email;
-
-
-
-
-    app.controller('LoginCtrl', function () {
-        this.loginStatus = check();
-    });
-
-    app.controller('SignUp', function () {
-        this.sites = [
-            {
-                name: "Facebook",
-                style: "fb-style",
-                url: "/auth/facebook"
-            },
-            {
-                name: "Twitter ",
-                style: "twt-style",
-                url: "/auth/twitter"
-            }
-        ];
-
-    });
-
-
-
     app.controller("FormCtrl", function () {
         var num = 2;
         this.options = ["option1", "option2"];
@@ -43,21 +16,6 @@
             } else {
                 alert("Oops you cannot have more than 10 options for a poll");
             }
-        };
-    });
-
-
-    app.directive("signupButtons", function () {
-        return {
-            restrict: "E",
-            templateUrl: "signup-buttons.html"
-        };
-    });
-
-    app.directive("loginButtons", function () {
-        return {
-            restrict: "E",
-            templateUrl: "login-buttons.html"
         };
     });
 

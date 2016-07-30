@@ -46,7 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Client Session
 app.use(session({
     cookieName: 'session',
-    secret: 'SecreT',
+    secret: 'secret',
     duration: 60 * 60 * 1000,
     activeDuration: 10 * 60 * 1000,
     cookie : {

@@ -5,7 +5,7 @@ body{
 
 .mainBanner{
     height: 10em;
-    margin: 3% auto auto auto;
+    margin: 2% auto auto auto;
     border-radius: 10px;
 }
 
@@ -30,7 +30,7 @@ body{
 .fb-style{
     background-color: #3D67BC;
     color: white;
-
+    margin: 1%;
 }
 
 .fb-style:hover{
@@ -42,17 +42,18 @@ body{
     color: white;
 }
 
-.twt-style{
-    background-color: #00ACED;
+.g-style{
+    background-color: #DD4B39;
     color: white;
+    margin: 1%;
 }
 
-.twt-style:hover{
+.g-style:hover{
     color: white;
-    background-color: #038CBD;
+    background-color: #BD1B08;
 }
 
-.twt-style:enabled{
+.g-style:enabled{
     color: white;
 }
 
