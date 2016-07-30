@@ -1,27 +1,16 @@
 <h3 style="text-align:center">Welcome {{user.name}}</h3>
 
+<h4 class="create-text">Create a new poll</h4>
 
-<div ng-controller="FormCtrl as form">
-
-    <h4 class="create-text">Create a new poll</h4>
-    <form style="text-align:center" name="createPollForm" method="post" action="post" data-toggle="validator" role="form">
-        <input type="hidden" name="_csrf" value={{csrfToken}} />
-        <div class="row">
-            <div class="col-sm-6 col-centered">
-                <input type="text" minlength="6" maxlength="120" class="form-control" placeholder="Type here ..." ng-model="form.poll.main">
-                <div class="help-block" style="text-align:left">Minimum 6 characters</div> 
-            </div>
+<form style="text-align:center" name="createPollForm" method="post" action="post" role="form">
+    <input type="hidden" name="_csrf" value={{csrfToken}} />
+    <div class="row">
+        <div class="col-sm-6 col-centered">
+            <input type="text" minlength="6" maxlength="120" class="form-control" placeholder="Your poll here ..." required>
+            <p class="help-block" style="text-align:left">Minimum 6 characters</p>
         </div>
-        <h4 class="options-heading">Options</h4>
-        <div style="margin: 1% auto">
-            <div class="row" style="margin-top:0.5%" ng-repeat="option in form.options">
-                <div class="col-centered col-sm-4">
-                    <input type="text"  maxlength="50" class="form-control" placeholder="{[{option}]}" required/>
-                </div>
-            </div>
-        </div>
-        <button type="button" class="btn btn-sm btn-primary" id="form-button" ng-click="form.addOption()">+ add option</button>
-        <button type="submit" class="btn btn-md btn-success" id="form-button">Submit</button>
-    </form>
-
-</div>
+    </div>
+    <h4 class="options-heading">Options</h4>
+    <new-poll-options></new-poll-options>
+    <button type="submit" class="btn btn-md btn-success" id="form-button"><i class="fa fa-bullhorn" aria-hidden="true"></i> Create</button>
+</form>
