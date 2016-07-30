@@ -6,11 +6,6 @@
         $interpolateProvider.endSymbol('}]}');
     });
 
-    var name, pictureUrl, email;
-
-
-
-
     app.controller("newPollOptionsCtrl", function () {
         var num = 2;
         this.options = [];

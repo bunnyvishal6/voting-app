@@ -43,23 +43,6 @@ router.get('/polls', function (req, res) {
     }
 });
 
-//get dashboard
-router.get('/dashboard', function (req, res) {
-    if (req.session && req.session.user) { //checking for session if had session then serve dashboard else redirect to home page
-        User.findOne({ email: req.session.user.email }, function (err, user) {
-            if (!user) {
-                req.session.reset();
-                res.redirect('/');
-            } else {
-                res.locals.user = { name: user.name, email: user.email, loginType: user.loginType };
-                res.render('dashboard', { csrfToken: req.csrfToken() });
-            }
-        });
-    } else {
-        res.redirect('/');
-    }
-});
-
 //get login
 router.get('/login', function (req, res) {
     if (req.session && req.session.user) {
@@ -70,23 +53,12 @@ router.get('/login', function (req, res) {
     }
 });
 
-//get signup
-router.get('/signup', function (req, res) {
-    if (req.session && req.session.user) {
-        res.locals.user = req.session.user;
-        res.redirect('/dashboard');
-    } else {
-        res.render('signup', { csrfToken: req.csrfToken() });
-    }
-});
-
-
 //post login
 router.post('/login', function (req, res) {
     var email = req.body.username;
     var password = req.body.password;
     email = email.toLowerCase();
-    User.findOne({ email: email }, function (err, user) {
+    User.findOne({ email: email, loginType: 'manual' }, function (err, user) {
         if (!user) {
             res.render('login', { error: 'Incorrect username or password', csrfToken: req.csrfToken() });
         } else {
@@ -100,6 +72,17 @@ router.post('/login', function (req, res) {
         }
     });
 });
+
+//get signup
+router.get('/signup', function (req, res) {
+    if (req.session && req.session.user) {
+        res.locals.user = req.session.user;
+        res.redirect('/dashboard');
+    } else {
+        res.render('signup', { csrfToken: req.csrfToken() });
+    }
+});
+
 
 //post signup
 router.post('/signup', function (req, res) {
@@ -120,7 +103,7 @@ router.post('/signup', function (req, res) {
                     name: name,
                     email: email,
                     password: password,
-                    loginType: "manual"
+                    loginType: "manual",
                 });
                 User.createUser(newUser, function (err) {
                     if (err) {
@@ -163,6 +146,96 @@ router.get('/auth/google/callback',
     }
 );
 
+//get dashboard
+router.get('/dashboard', function (req, res) {
+    if (req.session && req.session.user) { //checking for session if had session then serve dashboard else redirect to home page
+        User.findOne({ email: req.session.user.email }, function (err, user) {
+            if (!user) {
+                req.session.reset();
+                res.redirect('/');
+            } else {
+                res.locals.user = { name: user.name, email: user.email, loginType: user.loginType };
+                res.render('dashboard', { csrfToken: req.csrfToken() });
+            }
+        });
+    } else {
+        req.flash('error_msg', "You should be logged in for your dashboard");
+        res.redirect('/login');
+    }
+});
+
+//get /settings
+router.get('/settings', function (req, res) {
+    if (req.session && req.session.user) {
+        User.findOne({ email: req.session.user.email }, function (err, user) { //If error or no user found reset the session else add res.locals.user with required data for messages on settings page.
+            if (err) {
+                req.session.reset();
+                req.flash('error_msg', "Oops something bad happened! please clear your cookies and then login.");
+                res.redirect('/');
+            } else {
+                if (!user) {
+                    req.session.reset();
+                    req.flash('error_msg', "Oops something bad happened! please clear your cookies and then login.");
+                    res.redirect('/');
+                } else {
+                    res.locals.user = {
+                        name: user.name,
+                        email: user.email,
+                        loginType: user.loginType,
+                        canLoginManual: user.canLoginManual
+                    };
+                    switch (res.locals.user.loginType) {
+                        case "manual":
+                            res.locals.user.canLoginManual = true;
+                            break;
+                        case "facebook":
+                            res.locals.user.canLoginWithFacebook = true;
+                            break;
+                        case "google":
+                            res.locals.user.canLoginWithGoogle = true;
+                    }
+                    res.render('settings', { csrfToken: req.csrfToken() });
+                }
+            }
+        })
+    } else {
+        req.flash('error_msg', "You should be logged in to get access to your settings");
+        res.redirect('/login');
+    }
+});
+
+// post /settings/changePassword
+router.post('/settings/changePassword', function (req, res) {
+    var password = req.body.password;
+    var password1 = req.body.password1;
+    var password2 = req.body.password2;
+    if (password1 === password2) {
+        if (req.session && req.session.user) {
+            User.setUserPassword(req.session.user, password, password1, function (num) {
+                switch (num) {
+                    case 1:
+                        req.session.reset();
+                        req.flash("error_msg", "something bad happened, please clear your cookies and login again");
+                        res.redirect('/login');
+                        break;
+                    case 2:
+                        req.flash("error_msg", "Your current password is incorrect, please try with correct password");
+                        res.redirect('/dashboard');
+                        break;
+                    case 3:
+                        req.flash("success_msg", "Your password is successfully reseted");
+                        res.redirect('/dashboard');
+                        break;
+                    case 4:
+                        req.flash("success_msg", "Your password successfully added. Now you can login with password and your social account(s)!");
+                        res.redirect('/dashboard');
+                }
+            });
+        }
+    } else {
+        res.render("settings", { "error_msg": "your passwords do not match, please try again" });
+    }
+});
 
 //get logout
 router.get('/logout', function (req, res) {
