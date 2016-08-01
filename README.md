@@ -1,4 +1,4 @@
 #To do#
 
-* Develop polls posting and displaying system.
+* Imrpove UI for flash messages.
 * Develop voting system.
