@@ -6,10 +6,9 @@ var csrf = require('csurf');
 var passport = require('passport');
 var facebookLogin = require('../config/passport');
 
-
-
-//import Users model
+//import Users model and poll model
 var User = require('../models/users');
+var Poll = require('../models/polls');
 
 //CSRF(Cross site request forgery) protection
 router.use(csrf());
@@ -66,7 +65,6 @@ router.post('/login', function (req, res) {
                 req.session.user = { name: user.name, email: user.email, id: user.id };
                 res.redirect('/dashboard');
             } else {
-                var token = req.csrfToken();
                 res.render('login', { error: 'Incorrect username or password', csrfToken: req.csrfToken() });
             }
         }
@@ -104,6 +102,7 @@ router.post('/signup', function (req, res) {
                     email: email,
                     password: password,
                     loginType: "manual",
+                    numberOfPolls: 0
                 });
                 User.createUser(newUser, function (err) {
                     if (err) {
@@ -154,8 +153,19 @@ router.get('/dashboard', function (req, res) {
                 req.session.reset();
                 res.redirect('/');
             } else {
-                res.locals.user = { name: user.name, email: user.email, loginType: user.loginType };
-                res.render('dashboard', { csrfToken: req.csrfToken() });
+                res.locals.user = { name: user.name, email: user.email, loginType: user.loginType, numberOfPolls: user.numberOfPolls };
+                if(user.numberOfPolls === 5){res.locals.user.reachedLimit = true;}
+                Poll.find({createdBy: user.email}, function (err, data) {
+                    if(err){
+                        res.render('dashboard', {error_msg: "oops something bad happened, please clear your cookies and login again", csrfToken: req.csrfToken() });
+                        throw err;
+                    } else {
+                        res.locals.user.polls = data;
+                        var formtoken = req.csrfToken();
+                        res.locals.user.formToken = formtoken;
+                        res.render('dashboard', { csrfToken: formtoken });
+                    }
+                });
             }
         });
     } else {

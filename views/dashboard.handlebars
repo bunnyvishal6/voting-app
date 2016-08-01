@@ -1,16 +1,55 @@
 <h3 style="text-align:center">Welcome {{user.name}}</h3>
 
+{{#if user.reachedLimit}}
+<div class="alert alert-warning" style="text-align:center">
+    You reached maximum limit of creating polls. If you want to create a new poll delete your delete any of your previous polls
+</div>
+{{else}}
 <h4 class="create-text">Create a new poll</h4>
-
-<form style="text-align:center" name="createPollForm" method="post" action="post" role="form">
+<form style="text-align:center" name="createPollForm" method="post" action="/api/polls/post" role="form">
     <input type="hidden" name="_csrf" value={{csrfToken}} />
-    <div class="row">
-        <div class="col-sm-6 col-centered">
-            <input type="text" minlength="6" maxlength="120" class="form-control" placeholder="Your poll here ..." required>
-            <p class="help-block" style="text-align:left">Minimum 6 characters</p>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-6 col-centered">
+                <input name="question" type="text" minlength="6" maxlength="120" class="form-control" placeholder="Your poll here ..." required>
+                <p class="help-block" style="text-align:left">Minimum 6 characters</p>
+            </div>
         </div>
+        <h4 class="options-heading">Options</h4>
+        <new-poll-options></new-poll-options>
+        <button type="submit" class="btn btn-md btn-success" id="form-button"><i class="fa fa-bullhorn" aria-hidden="true"></i> Create</button>
     </div>
-    <h4 class="options-heading">Options</h4>
-    <new-poll-options></new-poll-options>
-    <button type="submit" class="btn btn-md btn-success" id="form-button"><i class="fa fa-bullhorn" aria-hidden="true"></i> Create</button>
 </form>
+{{/if}}
+<h3 style="text-align:center; ">Your polls</h3>
+
+
+{{#if user.polls}}
+{{#each user.polls}}
+    <form name="{{this.question}}" method="POST" action="/api/polls/delete">
+        <input type="hidden" name="_csrf" value={{../user.formToken}} />
+        <div class="form-group">
+            <input type="hidden" name="id" value="{{this._id}}" />
+            <div style="margin: 1% auto">
+                <div class="row" style="margin-top:0.5%">
+                    <div class="col-centered col-md-6">
+                        <div class="input-group">
+                            <a  type="text" class="form-control poll-preview btn btn-md btn-default" >{{this.question}}</a>
+                            <span class="input-group-btn">
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{{/each}}
+{{else}}
+    <div class="alert alert-info" style="text-align:center">
+        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> You haven't created any polls yet .  You can make upto 5 posts.
+    </div>
+
+{{/if}}

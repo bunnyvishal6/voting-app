@@ -10,12 +10,12 @@
         var num = 2;
         this.options = [];
         for(var i = 1; i <= num; i++){
-            this.options.push({name: "option", num:i});
+            this.options.push({name: "option" , num:i});
         }
         this.addOption = function () {
             if (this.options.length < 10) {
                 var currNum = this.options.length + 1;
-                this.options.push({name: "option", num:currNum});
+                this.options.push({name: "option" , num:currNum});
             } else {
                 alert("Oops you cannot have more than 10 options for a poll");
             }

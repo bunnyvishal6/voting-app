@@ -10,7 +10,8 @@ var User = mongoose.model('User', new Schema({
     email: { type: String, unique: true },
     password: String,
     loginType: String,
-    canLoginManual: Boolean
+    canLoginManual: Boolean,
+    numberOfPolls: Number
 }));
 
 //export User model and a create User function to hash the password

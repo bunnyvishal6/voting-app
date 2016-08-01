@@ -1,8 +1,8 @@
 <div style="margin: 1% auto">
     <div class="row" style="margin-top:0.5%" ng-repeat="option in poll.options">
-        <div class="col-centered col-sm-4">
+        <div class="col-centered col-md-4">
             <div class="input-group">
-                <input type="text" maxlength="50" class="form-control" placeholder="{[{option.name}]}" required/>
+                <input name="options" type="text" maxlength="40" class="form-control" placeholder="{[{option.name}]}" required/>
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="poll.removeOption(option)">
                         <i class="fa fa-times-circle" aria-hidden="true"></i>
@@ -12,4 +12,4 @@
         </div>
     </div>
 </div>
-<button type="button" class="btn btn-sm btn-primary" id="form-button" ng-click="poll.addOption()"><i class="fa fa-plus" aria-hidden="true"></i> add option</button>
+<button type="button" class="btn btn-md btn-primary" id="form-button" ng-click="poll.addOption()"><i class="fa fa-plus" aria-hidden="true"></i> add option</button>

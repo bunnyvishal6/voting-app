@@ -90,7 +90,11 @@ body{
 }
 
 .options-heading{
-    margin: 2% auto auto;
+    margin: auto;
     text-align: center
 }
 
+.poll-preview{
+    text-align: left; 
+    text-decoration: none;
+}
