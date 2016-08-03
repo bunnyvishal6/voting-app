@@ -3,7 +3,6 @@ var GoogleStrategy = require('passport-google-oauth20').Strategy;
 var User = require('../models/users');
 var authConfig = require('./auth');
 
-//function for finding a user or creaing new user
 function findOrCreate(profile, loginType, done) {
     User.findOne({
         email: profile.emails[0].value,
@@ -20,7 +19,8 @@ function findOrCreate(profile, loginType, done) {
                 var newUser = new User({
                     name: name,
                     email: profile.emails[0].value.toLowerCase(),
-                    loginType: loginType
+                    loginType: loginType,
+                    numberOfPolls: 0
                 });
                 User.createUser(newUser, function (err) { if (err) { throw err } });
                 done(null, newUser);
@@ -48,8 +48,6 @@ module.exports = function (passport) {
             }
         });
     });
-
-    //creating and using facebook strategy
     passport.use(new FacebookStrategy({
         clientID: authConfig.facebookAuth.clientID,
         clientSecret: authConfig.facebookAuth.clientSecret,
@@ -61,7 +59,6 @@ module.exports = function (passport) {
         }
     ));
 
-    //creating and using google strategy
     passport.use(new GoogleStrategy({
         clientID: authConfig.googleAuth.clientID,
         clientSecret: authConfig.googleAuth.clientSecret,
