@@ -15,7 +15,7 @@
         crossorigin="anonymous" />
     <!-- Font awesome css -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous" />
-    <link rel="stylesheet" type="text/css" href="custom.css" />
+    <link rel="stylesheet" type="text/css" href="/public/custom.css" />
 </head>
 
 <body>
@@ -32,9 +32,6 @@
                         <span class="icon-bar" style="background-color:white"></span>
                         <span class="icon-bar" style="background-color:white"></span>
                         <span class="icon-bar" style="background-color:white"></span>
-                        {{#unless user}}
-                        <span class="icon-bar" style="background-color:white"></span>
-                        {{/unless}}
                     </button>
                     <a class="navbar-brand" style="color:white" href="#"><span>Voting App</span></a>
                 </div>
@@ -43,12 +40,10 @@
                     <ul class="nav navbar-nav navbar-right">
                         {{#if user}}
                         <li><a href="/dashboard"><span style="color:white"><i class="fa fa-tachometer" aria-hidden="true"></i> Dashboard</span></a></li>
-                        <li><a href="/polls"><span style="color:white"><i class="fa fa-line-chart" aria-hidden="true"></i> Polls</span></a></li>
                         <li><a href="/settings"><span style="color:white"><i class="fa fa-cog" aria-hidden="true"></i> Settings</span></a></li>
                         <li><a href="/logout"><span style="color:white"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</span></a></li>
                         {{else}}
                         <li><a href="/"><span style="color:white"><i class="fa fa-home" aria-hidden="true"></i> Home</span></a></li>
-                        <li><a href="/polls"><span style="color:white"><i class="fa fa-line-chart" aria-hidden="true"></i> Polls</span></a></li>
                         <li><a href="/login"><span style="color:white"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</span></a></li>
                         <li><a href="/signup"><span style="color:white"><i class="fa fa-user-plus" aria-hidden="true"></i> Sign Up</span></a></li>
                         {{/if}}
@@ -67,17 +62,26 @@
         </div>
 
         <div class="row">
-            <div class="col-md-10 col-centered">
+            <div class=" col col-md-10 col-centered">
                 {{#if success_msg}}
-                    <div class="alert alert-success" style="text-align:center">{{success_msg}}</div>
+                    <div class="alert alert-success alert-dismissible" style="text-align:center">
+                        {{success_msg}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
                 {{/if}}
 
                 {{#if error_msg}}
-                    <div class="alert alert-danger" style="text-align:center">{{error_msg}}</div>
+                    <div class="alert alert-danger alert-dismissible" style="text-align:center">
+                        {{error_msg}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
                 {{/if}}
 
                 {{#if error}}
-                    <div class="alert alert-danger" style="text-align:center">{{error}}</div>
+                    <div class="alert alert-danger alert-dismissible" style="text-align:center">
+                        {{error}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
                 {{/if}}
             </div>
         </div>
@@ -99,9 +103,16 @@
     <!-- Latest compiled and minified Angular route js-->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js"></script>
     <!-- app.js Angular file -->
-    <script src="app.js"></script>
+    <script src="/public/app.js"></script>
     <!-- validator -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>   
+    
+    {{#if poll.question}}
+        <!-- Chart.js  -->
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1/Chart.min.js"></script>
+        <!-- cutom google charts script -->
+        <script type="text/javascript" src="/public/custom.js"></script>
+    {{/if}}
 </body>
 
 </html>

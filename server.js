@@ -20,19 +20,22 @@ var User = require('./models/users');
 //
 mongoose.Promise = global.Promise;
 //Database connect
-mongoose.connect('mongodb://localhost:27017/test');
+mongoose.connect('mongodb://localhost:27017/polling');
 var db = mongoose.connection;
 
 //Routes
 var routes = require('./routes/index');
+var pollsRouter = require('./routes/pollsRouter');
 var api = require('./routes/api');
 
 //Init
 var app = express();
 
+
+
 //View Engine
 app.set('views', path.join(__dirname + '/views'));
-app.engine('handlebars', exphbs({defaultLayout: 'layout'}));
+app.engine('handlebars', exphbs({ defaultLayout: 'layout' }));
 app.set('view engine', 'handlebars');
 
 // BodyParser and cookieParser Middleware
@@ -43,16 +46,20 @@ app.use(cookieParser());
 // Set Static Folder
 app.use(express.static(path.join(__dirname, 'public')));
 
+//statis files serve 
+app.use("/public", express.static(path.join(__dirname, 'public')));
+
+
 // Client Session
 app.use(session({
-    cookieName: 'session',
-    secret: 'secret',
-    duration: 60 * 60 * 1000,
-    activeDuration: 10 * 60 * 1000,
-    cookie : {
-      httpOnly: true,
-      ephemeral: true 
-    }
+  cookieName: 'session',
+  secret: 'sdhfjhjH64HJHs5uiauijh67DSHg',
+  duration: 60 * 60 * 1000,
+  activeDuration: 10 * 60 * 1000,
+  cookie: {
+    httpOnly: true,
+    ephemeral: true
+  }
 }));
 
 // Passport init
@@ -73,6 +80,7 @@ app.use(function (req, res, next) {
 
 //setting routes
 app.use('/', routes);
+app.use('/polls', pollsRouter);
 app.use('/api', api);
 
 //app listen

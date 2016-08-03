@@ -90,11 +90,17 @@ body{
 }
 
 .options-heading{
-    margin: auto;
-    text-align: center
+    margin: 2% 1% auto;
+    text-align: center;
 }
 
 .poll-preview{
     text-align: left; 
     text-decoration: none;
+}
+
+
+
+canvas{
+  height: 100%;
 }

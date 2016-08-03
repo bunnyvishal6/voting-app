@@ -6,7 +6,7 @@
 </div>
 {{else}}
 <h4 class="create-text">Create a new poll</h4>
-<form style="text-align:center" name="createPollForm" method="post" action="/api/polls/post" role="form">
+<form style="text-align:center" name="createPollForm" method="post" action="/polls/post" role="form">
     <input type="hidden" name="_csrf" value={{csrfToken}} />
     <div class="form-group">
         <div class="row">
@@ -26,7 +26,7 @@
 
 {{#if user.polls}}
 {{#each user.polls}}
-    <form name="{{this.question}}" method="POST" action="/api/polls/delete">
+    <form name="{{this.question}}" method="POST" action="/polls/delete">
         <input type="hidden" name="_csrf" value={{../user.formToken}} />
         <div class="form-group">
             <input type="hidden" name="id" value="{{this._id}}" />
@@ -34,7 +34,7 @@
                 <div class="row" style="margin-top:0.5%">
                     <div class="col-centered col-md-6">
                         <div class="input-group">
-                            <a  type="text" class="form-control poll-preview btn btn-md btn-default" >{{this.question}}</a>
+                            <a target="_blank" href="/polls/{{this.url}}" type="text" class="form-control poll-preview btn btn-md btn-default" >{{this.question}}</a>
                             <span class="input-group-btn">
                                 <button type="submit" class="btn btn-danger">
                                     <i class="fa fa-trash-o" aria-hidden="true"></i>

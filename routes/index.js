@@ -13,6 +13,7 @@ var Poll = require('../models/polls');
 //CSRF(Cross site request forgery) protection
 router.use(csrf());
 
+
 //facebook login strategy call
 facebookLogin(passport);
 
@@ -25,22 +26,6 @@ router.get('/', function (req, res) {
     }
 });
 
-//get polls
-router.get('/polls', function (req, res) {
-    if (req.session && req.session.user) { //check if had sessoion if so render with session else render polls without session
-        User.findOne({ email: req.session.user.email }, function (err, user) {
-            if (!user) {
-                req.session.reset();
-                res.render('polls');
-            } else {
-                res.locals.user = user;
-                res.render('polls');
-            }
-        });
-    } else {
-        res.render('polls');
-    }
-});
 
 //get login
 router.get('/login', function (req, res) {

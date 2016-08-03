@@ -1,0 +1,40 @@
+{{#if poll.votes}}
+    <div class="row">
+    <div class="col col-md-6 col-centered">
+        <div class="panel-content text-center">
+         <canvas id="doughnutChart" class="chart" width="200" height="200"></canvas>
+        </div>
+    </div>
+</div>
+{{/if}}
+
+<form style="text-align:center" name="createPollForm" method="post" action="/polls/vote" role="form">
+    <input type="hidden" name="_csrf" value={{csrfToken}} />
+    <input type="hidden" name="question" value="{{poll.question}}" />
+    <input type="hidden" name="url" value="{{poll.url}}" />
+    <input type="hidden" name="id" value="{{poll._id}}" />
+    <div class="row">
+        <div class="col col-md-6 col-centered">
+            <div style="text-align:center">
+                <h3>
+                  <strong> Poll: </strong> {{poll.question}}
+                </h3>
+            </div>
+        </div>
+    </div>
+    <h4><strong>Total votes: </strong> &nbsp; {{poll.votes}}</h4>
+    <h4 class="options-heading">Options</h4>
+    <div class="row" style="text-align:left; margin-top:1%">
+        <div class="col col-md-4 col-centered">
+            <div class="list-group">
+                {{#each poll.options}}
+                <a href="#" class="list-group-item mainOptionsSelector">
+                    <input type="checkbox" class="optionsSelector" name="option" value="{{this.option}}" /> {{this.option}}           
+                </a>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success" id="form-button"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Vote</button>
+</form>
+
