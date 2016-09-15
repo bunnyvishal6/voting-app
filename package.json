@@ -1,5 +1,5 @@
 {
-  "Name": "bunny-voting-app",
+  "Name": "voting-app",
   "version": "1.0.0",
   "description": "This is a voting app",
   "main": "server.js",
